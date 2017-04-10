@@ -72,7 +72,7 @@ string classify(vector<double> inX, vector<vector<double>> dataSet, vector<strin
 	return label;
 }
 
-void autoNorm(vector<vector<double>> &dataSet)
+void autoNormONE(vector<vector<double>> &dataSet)
 {
 	//归一化特征值
 	int len = dataSet[0].size();
@@ -97,8 +97,54 @@ void autoNorm(vector<vector<double>> &dataSet)
 		for (int i = 0; i < len; ++i)
 		{
 			data[i] = (data[i] - minVal[i]) / (maxVal[i] - minVal[i]);
+			//cout << data[i] <<" ";
 		}
+		//cout << endl;
 	}	
+}
+
+void autoNormTWO(vector<vector<double>> &dataSet, vector<vector<double>> &testSet)
+{
+	//归一化特征值
+	vector<vector<double>> allSet;
+	allSet.insert(allSet.end(), dataSet.begin(), dataSet.end());
+	allSet.insert(allSet.end(), testSet.begin(), testSet.end());//合并两个集合
+
+	int len = allSet[0].size();
+	vector<double> maxVal, minVal;
+	for (auto val : allSet[0])//置入第一个数据行
+	{
+		maxVal.push_back(val);
+		minVal.push_back(val);
+	}
+	for (auto data : allSet)//找出每个特征的最大值和最小值
+	{
+		for (int i = 0; i < len; ++i)
+		{
+			if (data[i]>maxVal[i])
+				maxVal[i] = data[i];
+			if (data[i]<minVal[i])
+				minVal[i] = data[i];
+		}
+	}
+	for (auto &data : dataSet)//归一化dataSet
+	{
+		for (int i = 0; i < len; ++i)
+		{
+			data[i] = (data[i] - minVal[i]) / (maxVal[i] - minVal[i]);
+			//cout << data[i] <<" ";
+		}
+		//cout << endl;
+	}
+	for (auto &data : testSet)//归一化testSet
+	{
+		for (int i = 0; i < len; ++i)
+		{
+			data[i] = (data[i] - minVal[i]) / (maxVal[i] - minVal[i]);
+			//cout << data[i] <<" ";
+		}
+		//cout << endl;
+	}
 }
 
 void readFile(const char* fileName, vector<vector<double>> &dataSet, vector<string> &labels)
@@ -136,7 +182,7 @@ void kNNTest(vector<vector<double>> testSet, vector<string> testLabels, vector<v
 	for (unsigned int j = 0; j < testSet.size(); ++j)
 	{
 		string label = classify(testSet[j], dataSet, labels, k);
-		cout << j + 1 << "times, " << "the classifier came back with: " << label << ",the real answer is " << testLabels[j] << endl;
+		//cout << j + 1 << "times, " << "the classifier came back with: " << label << ",the real answer is " << testLabels[j] << endl;
 		if (label != testLabels[j])
 		{
 			++count_wrong;
@@ -154,15 +200,17 @@ int main()
 	vector<vector<double>> dataSetX, testSetX;
 	vector<string> labelsX, testLabelsX;
 	vector<double> inXX = { 94900,	6.724021,	0.7 };
-	int k = 10;
+	int k = 3;
 
 
 
 	readFile("datingTrainSet.txt", dataSetX, labelsX);
-	autoNorm(dataSetX);
 
-	readFile("datingTestSet.txt", testSetX, testLabelsX);
-	autoNorm(testSetX);
+	//readFile("datingTestSet.txt", testSetX, testLabelsX);
+	readFile("datingTrainSet.txt", testSetX, testLabelsX);
+
+	autoNormTWO(dataSetX, testSetX);
+
 	kNNTest(testSetX, testLabelsX, dataSetX, labelsX, k);//算法测试
 
 	cout << "------------------------------------------------------" << endl;
