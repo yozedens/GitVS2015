@@ -24,18 +24,20 @@ bool compCfs(Cfloatstr a, Cfloatstr b)
 		return 0;
 }
 
-string classify(vector<double> inX, vector<vector<double>> dataSet, vector<string> labels, int k)
+template<typename T>
+string classify(vector<T> inX, vector<vector<T>> dataSet, vector<string> labels, int k)
+//string classify(vector<double> inX, vector<vector<double>> dataSet, vector<string> labels, int k)
 {
 	/*kNN分类函数
-	 inX：未分类的输入数据，dataSet：样本集，labels：标签，k:k值
-	 return value： 输入数据的分类标签
+	inX：未分类的输入数据，dataSet：样本集，labels：标签，k:k值
+	return value： 输入数据的分类标签
 
-	 date: 2017-04-08
-	 by: 余祖登
+	date: 2017-04-08
+	by: 余祖登
 	*/
 
 	vector<Cfloatstr> labels_with_dis;//带距离的标签集
-	//计算输入数据与各样本点的欧氏距离
+									  //计算输入数据与各样本点的欧氏距离
 	for (unsigned int j = 0; j < dataSet.size(); ++j)
 	{
 		double dis = 0;
@@ -49,7 +51,7 @@ string classify(vector<double> inX, vector<vector<double>> dataSet, vector<strin
 	}
 	sort(labels_with_dis.begin(), labels_with_dis.end(), compCfs);//按距离排序
 
-	//计算前k个距离对应标签出现的次数，存入关联容器
+																  //计算前k个距离对应标签出现的次数，存入关联容器
 	map<string, int> count_labels;
 	string label;
 	for (int i = 0; i < k; i++)
@@ -84,7 +86,7 @@ void autoNormONE(vector<vector<double>> &dataSet)
 	}
 	for (auto data : dataSet)//找出每个特征的最大值和最小值
 	{
-		for (int i = 0; i < len;++i)
+		for (int i = 0; i < len; ++i)
 		{
 			if (data[i]>maxVal[i])
 				maxVal[i] = data[i];
@@ -100,7 +102,7 @@ void autoNormONE(vector<vector<double>> &dataSet)
 			//cout << data[i] <<" ";
 		}
 		//cout << endl;
-	}	
+	}
 }
 
 void autoNormTWO(vector<vector<double>> &dataSet, vector<vector<double>> &testSet)
@@ -145,6 +147,27 @@ void autoNormTWO(vector<vector<double>> &dataSet, vector<vector<double>> &testSe
 		}
 		//cout << endl;
 	}
+}
+
+template<typename T>
+void kNNTest(vector<vector<T>> testSet, vector<string> testLabels, vector<vector<T>> dataSet, vector<string> labels, int k)
+{
+	//算法测试
+	double count_wrong = 0;
+	for (unsigned int j = 0; j < testSet.size(); ++j)
+	{
+		string label = classify(testSet[j], dataSet, labels, k);
+		cout << j + 1 << "times, " << "the classifier return: " << label << ",the real answer is " << testLabels[j] << endl;
+		if (label != testLabels[j])
+		{
+			++count_wrong;
+			cout << "Wrong!!!" << endl;
+		}
+	}
+	count_wrong /= (double)testSet.size();
+
+	cout << "The total error rate is： " << count_wrong << endl;
+
 }
 
 void readFile(const char* fileName, vector<vector<double>> &dataSet, vector<string> &labels)
@@ -205,27 +228,8 @@ void readFile2(const char* fileName, vector<vector<double>> &dataSet, vector<str
 	file.close();
 }
 
-void kNNTest(vector<vector<double>> testSet, vector<string> testLabels, vector<vector<double>> dataSet, vector<string> labels, int k)
-{
-	//算法测试
-	double count_wrong = 0;
-	for (unsigned int j = 0; j < testSet.size(); ++j)
-	{
-		string label = classify(testSet[j], dataSet, labels, k);
-		cout << j + 1 << "times, " << "the classifier return: " << label << ",the real answer is " << testLabels[j] << endl;
-		if (label != testLabels[j])
-		{
-			++count_wrong;
-			cout << "Wrong!!!" << endl;
-		}
-	}
-	count_wrong /= (double)testSet.size();
 
-	cout << "The total error rate is： " << count_wrong << endl;
-
-}
-
-int main()
+int main()/*mainPerson()*/
 {
 	vector<vector<double>> dataSetX, testSetX;
 	vector<string> labelsX, testLabelsX;
@@ -248,4 +252,5 @@ int main()
 	cout << "inX的分类是： " << classify(inXX, dataSetX, labelsX, k) << endl;
 
 	system("pause");
+	return 0;
 }
