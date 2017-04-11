@@ -158,18 +158,48 @@ void readFile(const char* fileName, vector<vector<double>> &dataSet, vector<stri
 	double f;
 	while (getline(file, dataStr))//读取一行
 	{
-		//cout << dataStr << endl;
+		cout << dataStr << endl;
 		vector<double> vf;
 		istringstream data(dataStr);//从字符传中读取字符
 		while (data >> f)
 		{
 			vf.push_back(f);
-			//cout << f << endl;
+			cout << f << endl;
 		}
 		vf.pop_back();//移除最后一个
 		labels.push_back(to_string(f));//最后一个字符串保存到labels中
 		dataSet.push_back(vf);
 		//cout <<"dataSet[0][0]: "<< dataSet[0][0] << endl;
+	}
+
+	file.close();
+}
+
+void readFile2(const char* fileName, vector<vector<double>> &dataSet, vector<string> &labels)
+{
+	ifstream file(fileName);
+	if (!file.is_open())
+	{
+		cout << "Error opening file"; exit(1);
+	}
+	string dataStr, subStr;
+	double f;
+	int index = 0;
+	while (getline(file, dataStr))//读取一行
+	{
+		//cout << dataStr << endl;
+		vector<double> vf;
+		istringstream data(dataStr);//从字符传中读取字符
+		for (int i = 1; i <= 3; ++i)
+		{
+			data >> f;
+			vf.push_back(f);
+			//cout << f << endl;
+		}
+		data >> subStr;
+		labels.push_back(subStr);//最后一个字符串保存到labels中
+		dataSet.push_back(vf);
+		//cout <<"labels[index]: "<< labels[index++] << endl;
 	}
 
 	file.close();
@@ -182,7 +212,7 @@ void kNNTest(vector<vector<double>> testSet, vector<string> testLabels, vector<v
 	for (unsigned int j = 0; j < testSet.size(); ++j)
 	{
 		string label = classify(testSet[j], dataSet, labels, k);
-		//cout << j + 1 << "times, " << "the classifier came back with: " << label << ",the real answer is " << testLabels[j] << endl;
+		cout << j + 1 << "times, " << "the classifier return: " << label << ",the real answer is " << testLabels[j] << endl;
 		if (label != testLabels[j])
 		{
 			++count_wrong;
@@ -204,10 +234,10 @@ int main()
 
 
 
-	readFile("datingTrainSet.txt", dataSetX, labelsX);
+	readFile2("datingTrainSet2.txt", dataSetX, labelsX);
 
-	//readFile("datingTestSet.txt", testSetX, testLabelsX);
-	readFile("datingTrainSet.txt", testSetX, testLabelsX);
+	readFile2("datingTestSet2.txt", testSetX, testLabelsX);
+	//readFile("datingTrainSet.txt", testSetX, testLabelsX);
 
 	autoNormTWO(dataSetX, testSetX);
 
