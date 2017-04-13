@@ -89,6 +89,7 @@ vector<int> img2vector2(string fileName)
 		vecImg.push_back(num);
 		cout << num << endl;
 	}
+	file.close();
 	return vecImg;
 
 }
