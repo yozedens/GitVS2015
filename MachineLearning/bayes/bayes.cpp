@@ -62,6 +62,23 @@ vector<int> setOfWords2Vec(set<string> vocabList, vector<string> inputSet)
 	return reVec;
 }
 
+void trainNB0(vector<vector<int>> trainMatrix, vector<int> trainCategory)
+{
+	auto numTrainDocs = trainMatrix.size();
+	auto numWords = trainMatrix[0].size();
+	double pAbusive = 0.0;//侮辱性文档的概率p(c1)，数量除以总数
+	for (auto num : trainCategory)
+	{
+		pAbusive += num / (double)numTrainDocs;
+	}
+	vector<double> p0Num, p1Num;
+	double p0Denom, p1Denom;
+	for (auto i = 0; i < numTrainDocs; ++i)
+	{
+
+	}
+}
+
 //打印该数据集
 void coutVecVecStr(const vector<vector<string>> &data)
 {
