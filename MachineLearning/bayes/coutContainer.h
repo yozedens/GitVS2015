@@ -8,6 +8,7 @@
 //copy(vocabSet.begin(), vocabSet.end(), ostream_iterator<string>(cout, " "));
 
 #include<iostream>
+#include<iomanip>
 using namespace std;
 
 //单层标准容器打印函数，如vector<T>,其中T应为简单数据类型或指针类型
