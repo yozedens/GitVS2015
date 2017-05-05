@@ -18,15 +18,21 @@
     <ClInclude Include="bayes.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="dealContentFiles.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="dealString.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="coutContainer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bayes.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="dealString.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="bayesTest.h">
+    <ClCompile Include="bayesTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

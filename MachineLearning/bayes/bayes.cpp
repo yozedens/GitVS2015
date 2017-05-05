@@ -115,7 +115,7 @@ CReTrainBN0 trainNB(const vector<vector<int>> &trainMatrix, const vector<int> &t
 	*/
 	auto numTrainDocs = trainMatrix.size();
 	auto numWords = trainMatrix[0].size();
-	double pAbusive = 0.0;//侮辱性文档的概率p(c1)，数量除以总数
+	double pAbusive = 0.0;//类别1文档的概率p(c1)，数量除以总数
 	for (auto num : trainCategory)
 	{
 		pAbusive += num / (double)numTrainDocs;
@@ -124,7 +124,7 @@ CReTrainBN0 trainNB(const vector<vector<int>> &trainMatrix, const vector<int> &t
 	int p0Denom = 2, p1Denom = 2;
 	for (size_t i = 0; i < numTrainDocs; ++i)//对每一个文档进行操作
 	{
-		if (trainCategory[i] == 1)//如果该文档属于侮辱性文档
+		if (trainCategory[i] == 1)//如果该文档属于类别1文档
 		{
 			p1Denom += count(trainMatrix[i].begin(), trainMatrix[i].end(), 1);//统计单词数
 			for (size_t j = 0; j < numWords; j++)//对词汇表中每个词汇
@@ -152,7 +152,7 @@ CReTrainBN0 trainNB(const vector<vector<int>> &trainMatrix, const vector<int> &t
 //打印该数据集
 
 //朴素贝叶斯分类函数
-int clssifyNB(vector<int> thisDoc, CReTrainBN0 resultTrain)
+int clssifyNB(const vector<int> &thisDoc, const CReTrainBN0 &resultTrain)
 {
 	auto lenDoc = thisDoc.size();
 	double p1 = 0.0, p0 = 0.0;
@@ -173,4 +173,6 @@ int clssifyNB(vector<int> thisDoc, CReTrainBN0 resultTrain)
 	}
 
 }
+
+
 

@@ -119,11 +119,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bayes.cpp" />
-    <ClCompile Include="bayesTest.h" />
-    <ClCompile Include="dealString.cpp" />
+    <ClCompile Include="bayesTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bayes.h" />
+    <ClInclude Include="coutContainer.h" />
+    <ClInclude Include="dealContentFiles.h" />
+    <ClInclude Include="dealString.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
