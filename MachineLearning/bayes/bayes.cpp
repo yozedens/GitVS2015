@@ -82,7 +82,7 @@ CReTrainBN0 trainNB0(const vector<vector<int>> &trainMatrix, const vector<int> &
 	{
 		if (trainCategory[i] == 1)//如果该文档属于侮辱性文档
 		{
-			p1Denom += count(trainMatrix[i].begin(), trainMatrix[i].end(), 1);//统计单词数
+			p1Denom += (int)count(trainMatrix[i].begin(), trainMatrix[i].end(), 1);//统计单词数
 			for (size_t j = 0; j < numWords; j++)//对词汇表中每个词汇
 			{
 				p1Num[j] += trainMatrix[i][j];
@@ -90,7 +90,7 @@ CReTrainBN0 trainNB0(const vector<vector<int>> &trainMatrix, const vector<int> &
 		}
 		else
 		{
-			p0Denom += count(trainMatrix[i].begin(), trainMatrix[i].end(), 1);//统计单词数
+			p0Denom += (int)count(trainMatrix[i].begin(), trainMatrix[i].end(), 1);//统计单词数
 			for (size_t j = 0; j < numWords; j++)//对词汇表中每个词汇
 			{
 				p0Num[j] += trainMatrix[i][j];
@@ -126,7 +126,7 @@ CReTrainBN0 trainNB(const vector<vector<int>> &trainMatrix, const vector<int> &t
 	{
 		if (trainCategory[i] == 1)//如果该文档属于类别1文档
 		{
-			p1Denom += count(trainMatrix[i].begin(), trainMatrix[i].end(), 1);//统计单词数
+			p1Denom += (int)count(trainMatrix[i].begin(), trainMatrix[i].end(), 1);//统计单词数
 			for (size_t j = 0; j < numWords; j++)//对词汇表中每个词汇
 			{
 				p1Num[j] += trainMatrix[i][j];
@@ -134,7 +134,7 @@ CReTrainBN0 trainNB(const vector<vector<int>> &trainMatrix, const vector<int> &t
 		}
 		else
 		{
-			p0Denom += count(trainMatrix[i].begin(), trainMatrix[i].end(), 1);//统计单词数
+			p0Denom += (int)count(trainMatrix[i].begin(), trainMatrix[i].end(), 1);//统计单词数
 			for (size_t j = 0; j < numWords; j++)//对词汇表中每个词汇
 			{
 				p0Num[j] += trainMatrix[i][j];

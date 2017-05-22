@@ -14,7 +14,7 @@ using namespace std;
 double calcShannonEnt(vector<vector<string>> dataSet)
 {
 	//计算给定数据集的香农熵,dataSet最后一列是标签
-	int numEntries = dataSet.size();
+	size_t numEntries = dataSet.size();
 	map<string, int> labelCounts;
 	for (auto featVec : dataSet)
 	{
@@ -24,7 +24,7 @@ double calcShannonEnt(vector<vector<string>> dataSet)
 	double shannonEnt = 0.0;
 	for (auto label : labelCounts)
 	{
-		double prob = double(label.second) / numEntries;
+		double prob = double(label.second) / (double)numEntries;
 		shannonEnt -= prob*log(prob)/log(2);
 	}
 	return shannonEnt;
@@ -54,7 +54,7 @@ vector<vector<string>> splitDataSet(vector<vector<string>> dataSet, int axis, st
 int chooseBestFeatureToSplit(vector<vector<string>> dataSet)
 {
 	//选择最好的数据集划分方式
-	int numFeatures = dataSet[0].size() - 1;
+	size_t numFeatures = dataSet[0].size() - 1;
 	double baseEntropy = calcShannonEnt(dataSet);
 	double bestInfoGain = 0.0;
 	int bestFeature = -1;

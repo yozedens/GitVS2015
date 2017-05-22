@@ -56,7 +56,7 @@ vector<int> img2vector(string fileName)
 
 	ifstream file(fileName);
 	string str;
-	int lenStr;
+	size_t lenStr;
 	vector<int> vecImg;
 	while (file>>str)
 	{
@@ -101,7 +101,7 @@ vector<vector<int>> getDataSet(char* filePath, vector<string> &labels)
 
 	vector<vector<int>> dataSet;
 	files = readContent(filePath);
-	int len = files.size();
+	size_t len = files.size();
 	for (int i = 0; i < len; i++)
 	{
 		//cout << files[i].substr(files[i].find_last_of('\\'),3) << endl;
@@ -116,8 +116,8 @@ vector<vector<int>> getDataSet(char* filePath, vector<string> &labels)
 void matrix2file(vector<vector<int>> matrix, string fileName)
 {
 	ofstream file(fileName);
-	int lenRow = matrix.size();
-	int lenColumn = matrix[0].size();
+	size_t lenRow = matrix.size();
+	size_t lenColumn = matrix[0].size();
 	for (auto dataRow : matrix)
 	{
 		for (auto data : dataRow)

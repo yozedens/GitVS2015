@@ -77,7 +77,7 @@ string classify(vector<T> inX, vector<vector<T>> dataSet, vector<string> labels,
 void autoNormONE(vector<vector<double>> &dataSet)
 {
 	//归一化特征值
-	int len = dataSet[0].size();
+	size_t len = dataSet[0].size();
 	vector<double> maxVal, minVal;
 	for (auto val : dataSet[0])//置入第一个数据行
 	{
@@ -86,7 +86,7 @@ void autoNormONE(vector<vector<double>> &dataSet)
 	}
 	for (auto data : dataSet)//找出每个特征的最大值和最小值
 	{
-		for (int i = 0; i < len; ++i)
+		for (size_t i = 0; i < len; ++i)
 		{
 			if (data[i]>maxVal[i])
 				maxVal[i] = data[i];
@@ -96,7 +96,7 @@ void autoNormONE(vector<vector<double>> &dataSet)
 	}
 	for (auto &data : dataSet)
 	{
-		for (int i = 0; i < len; ++i)
+		for (size_t i = 0; i < len; ++i)
 		{
 			data[i] = (data[i] - minVal[i]) / (maxVal[i] - minVal[i]);
 			//cout << data[i] <<" ";
@@ -112,7 +112,7 @@ void autoNormTWO(vector<vector<double>> &dataSet, vector<vector<double>> &testSe
 	allSet.insert(allSet.end(), dataSet.begin(), dataSet.end());
 	allSet.insert(allSet.end(), testSet.begin(), testSet.end());//合并两个集合
 
-	int len = allSet[0].size();
+	size_t len = allSet[0].size();
 	vector<double> maxVal, minVal;
 	for (auto val : allSet[0])//置入第一个数据行
 	{
@@ -121,7 +121,7 @@ void autoNormTWO(vector<vector<double>> &dataSet, vector<vector<double>> &testSe
 	}
 	for (auto data : allSet)//找出每个特征的最大值和最小值
 	{
-		for (int i = 0; i < len; ++i)
+		for (size_t i = 0; i < len; ++i)
 		{
 			if (data[i]>maxVal[i])
 				maxVal[i] = data[i];
