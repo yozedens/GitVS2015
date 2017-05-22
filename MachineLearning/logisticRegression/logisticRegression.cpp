@@ -4,8 +4,8 @@
 #include<vector>
 #include<string>
 #include<cmath>
-
-#include"E:\yuzudeng\GitVS2015\MachineLearning\bayes\coutContainer.h"
+#include<algorithm>
+#include"..\bayes\coutContainer.h"
 
 using namespace std;
 
@@ -51,34 +51,67 @@ vector<double> matMultiply(const vector<vector<double>> &dataSet, const vector<d
 	if (lenDataSet == 0 || lenLabels == 0 || dataSet[0].size() != lenLabels)
 	{
 		cout << "can not do this multiply!\n";
-		return;
+		exit(1);
 	}
 	vector<double> result;
 	for (size_t i = 0; i < lenDataSet; i++)
 	{
+		double re = 0.0;
 		for (size_t j = 0; j < lenLabels; j++)
 		{
-			result.push_back(dataSet[i][j] * labels[j]);
+			re += dataSet[i][j] * labels[j];
 		}
+		result.push_back(re);
 	}
 	return result;
 }
 
+vector<vector<double>> transpose(const vector<vector<double>>& matrix)
+{
+	vector<vector<double>> reMat;
+	size_t row = matrix.size();
+	size_t column = matrix[0].size();
+
+	for (size_t j = 0; j < column; ++j)
+	{
+		vector<double> tempVecD;
+		for (size_t i = 0; i < row; ++i)
+		{
+			tempVecD.push_back(matrix[i][j]);
+		}
+		reMat.push_back(tempVecD);
+	}
+	return reMat;
+}
+
+//
 vector<double> gradAscent(const vector<vector<double>> &dataSet, const vector<double> &labels)
 {
-	int lenOneData = dataSet[0].size();
+	size_t lenData = dataSet.size();
+	size_t lenOneData = dataSet[0].size();
 	vector<double> weights(lenOneData, 1.0);
+	double alpha = 0.001;
+
 	for (size_t i = 0; i < 500; i++)
 	{
 		vector<double> h = sigmoid(matMultiply(dataSet, weights));
-
+		vector<double> error;
+		for (size_t j = 0; j < lenData; ++j)
+		{
+			error.push_back(labels[j] - h[j]);
+		}
+		vector<double > tempMat = matMultiply(transpose(dataSet), error);
+		for (size_t k = 0; k < lenOneData; k++)
+		{
+			weights[k] = weights[k] + alpha*tempMat[k];
+		}
 	}
 	return weights;
-
 }
 
 int main()
 {
+
 	vector<vector<double>> dataSetX, testSetX;
 	vector<double> labelsX, testLabelsX;
 
@@ -87,6 +120,7 @@ int main()
 	coutVecVec(dataSetX, "dataSet:\n", 10);
 	coutVec(labelsX, "labelsX:\n");
 
-
+	vector<double> reMat = gradAscent(dataSetX, labelsX);
+	coutVec(reMat, "reMat:\n", 10);
 	system("pause");
 }
